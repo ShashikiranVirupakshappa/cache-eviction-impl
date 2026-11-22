@@ -1,11 +1,13 @@
 package com.javabro.lrucache;
 
+import com.javabro.cache.model.CacheObject;
+
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CustomCache {
+public class CustomLRUCache {
 
     private final Map<String, CacheObject> cache = new HashMap<>();
     private static final int CAPACITY = 10;

@@ -1,11 +1,14 @@
-package com.javabro.lrucache;
+package com.javabro.mrucache;
+
+import com.javabro.cache.model.CacheObject;
+import com.javabro.lrucache.CustomLRUCache;
 
 import java.time.LocalDateTime;
 
-public class CacheClientApp {
+public class MRUCacheClientApp {
     public static void main(String[] args) {
         int capacity = 10;
-        CustomCache customCache = new CustomCache();
+        CustomMRUCache customCache = new CustomMRUCache();
 
         //fill cache objects to map
         for(int i=0;i<capacity;i++) {
