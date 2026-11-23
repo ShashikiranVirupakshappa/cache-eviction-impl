@@ -1,14 +1,15 @@
 package com.javabro.lrucache;
 
+import com.javabro.cache.model.CacheObject;
+
 import java.time.LocalDateTime;
 
 public class LRUCacheClientApp {
     public static void main(String[] args) {
-        int capacity = 10;
         CustomLRUCache customCache = new CustomLRUCache();
 
         //fill cache objects to map
-        for(int i=0;i<capacity;i++) {
+        for(int i=0;i<10;i++) {
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {

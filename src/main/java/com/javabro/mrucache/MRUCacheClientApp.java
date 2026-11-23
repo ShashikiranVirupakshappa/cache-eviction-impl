@@ -1,16 +1,15 @@
 package com.javabro.mrucache;
 
+import com.javabro.cache.model.CacheObject;
+
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MRUCacheClientApp {
     public static void main(String[] args) {
-        int capacity = 10;
         CustomMRUCache customCache = new CustomMRUCache();
 
         //fill cache objects to map
-        for(int i=0;i<capacity;i++) {
+        for(int i=0;i<10;i++) {
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {

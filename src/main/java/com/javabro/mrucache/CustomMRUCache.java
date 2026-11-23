@@ -1,17 +1,19 @@
 package com.javabro.mrucache;
 
+import com.javabro.cache.model.CacheObject;
+
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class CustomMRUCache {
 
-    private final Map<String, CacheObject> cache = new HashMap<>();
+    private final Map<String, CacheObject> cache = new LinkedHashMap<>();
     private static final int CAPACITY = 10;
 
     public synchronized Map<String, CacheObject> getCache() {
-        return new HashMap<>(cache);
+        return new LinkedHashMap<>(cache);
     }
 
     public synchronized CacheObject get(String key) {
@@ -24,29 +26,31 @@ public class CustomMRUCache {
     }
 
     public synchronized void put(String key, CacheObject cacheObject) {
-        if (cache.containsKey(key)) {
-            cacheObject.setLastAccessedAt(LocalDateTime.now());
-            cache.put(key, cacheObject);
-        } else {
-            if (cache.size() < CAPACITY)
-                cache.put(key, cacheObject);
-            else if(cache.size() == CAPACITY){
+        if(key == null)
+            throw new IllegalArgumentException("key cannot be null");
+        if(cacheObject ==null)
+            throw new NullPointerException("Cache object is null");
+        if(!key.equals(cacheObject.getKey()))
+            throw new IllegalArgumentException("Cache key does not match");
+        if (!cache.containsKey(key)) {
+            if (cache.size() >= CAPACITY) {
                 //check for most recently used object to remove
                 String recentKey = null;
-                Long timeDiff = Long.MAX_VALUE;
+                long timeDiff = Long.MAX_VALUE;
                 for (Map.Entry<String, CacheObject> entry : cache.entrySet()) {
-                    if(entry.getValue().getLastAccessedAt() == null)
+                    if (entry.getValue().getLastAccessedAt() == null)
                         continue;
-                    if (ChronoUnit.SECONDS.between(entry.getValue().getLastAccessedAt(), LocalDateTime.now()) <= timeDiff) {
-                        timeDiff = ChronoUnit.SECONDS.between(entry.getValue().getLastAccessedAt(), LocalDateTime.now());
+                    if (ChronoUnit.MILLIS.between(entry.getValue().getLastAccessedAt(), LocalDateTime.now()) <= timeDiff) {
+                        timeDiff = ChronoUnit.MILLIS.between(entry.getValue().getLastAccessedAt(), LocalDateTime.now());
                         recentKey = entry.getKey();
                     }
                 }
                 System.out.println("recentKey to be removed " + recentKey);
                 cache.remove(recentKey);
-                cache.put(key, cacheObject);
             }
         }
+        cacheObject.setLastAccessedAt(LocalDateTime.now());
+        cache.put(key, cacheObject);
     }
 
     public synchronized CacheObject remove(String key) {
