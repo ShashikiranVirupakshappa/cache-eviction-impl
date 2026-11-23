@@ -1,9 +1,8 @@
 package com.javabro.mrucache;
 
-import com.javabro.cache.model.CacheObject;
-import com.javabro.lrucache.CustomLRUCache;
-
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MRUCacheClientApp {
     public static void main(String[] args) {

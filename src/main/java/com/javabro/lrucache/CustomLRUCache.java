@@ -1,7 +1,5 @@
 package com.javabro.lrucache;
 
-import com.javabro.cache.model.CacheObject;
-
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;

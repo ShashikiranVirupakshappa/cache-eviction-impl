@@ -1,7 +1,5 @@
 package com.javabro.mrucache;
 
-import com.javabro.cache.model.CacheObject;
-
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
@@ -33,10 +31,12 @@ public class CustomMRUCache {
             if (cache.size() < CAPACITY)
                 cache.put(key, cacheObject);
             else if(cache.size() == CAPACITY){
-                //check for least recently used object to remove
+                //check for most recently used object to remove
                 String recentKey = null;
                 Long timeDiff = Long.MAX_VALUE;
                 for (Map.Entry<String, CacheObject> entry : cache.entrySet()) {
+                    if(entry.getValue().getLastAccessedAt() == null)
+                        continue;
                     if (ChronoUnit.SECONDS.between(entry.getValue().getLastAccessedAt(), LocalDateTime.now()) <= timeDiff) {
                         timeDiff = ChronoUnit.SECONDS.between(entry.getValue().getLastAccessedAt(), LocalDateTime.now());
                         recentKey = entry.getKey();

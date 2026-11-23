@@ -1,4 +1,4 @@
-package com.javabro.cache.model;
+package com.javabro.lrucache;
 
 import java.time.LocalDateTime;
 
